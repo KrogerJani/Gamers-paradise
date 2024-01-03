@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { NavLink, Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import About from "./components/About";
+import Error from "./components/Error";
+import MainView from "./components/FrontPage";
+import GuessingGame from "./components/GuessingGame";
+import Register from "./components/Register";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+const Index = () => {
+
+
+    return (
+        <div>
+            <Router>
+                <Routes>
+                    <Route path={'/'} element={<MainView />} />
+                    <Route path={'/home'} element={<MainView />} />
+                    <Route path={'/about'} element={<About />} />
+                    <Route path={'/guessinggame'} element={<GuessingGame />} />
+                    <Route path={'/register'} element={<Register />} />
+                    <Route path={'*'} element={<Error />} />
+                </Routes>
+            </Router>
+        </div>
+
+
+    )
 }
 
-export default App;
+
+
+export default Index;
