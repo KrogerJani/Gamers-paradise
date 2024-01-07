@@ -25,12 +25,16 @@ module.exports = {
         return executesql('SELECT s.score, p.nickname, s.idgame FROM scores AS s JOIN players AS p ON s.idplayers = p.idplayers Where s.idgame = ? ORDER BY s.score ' + desc + '', [gameid]);
     },
 
-    getCurrentPlayerScore: (idplayers) => {
-        return executesql('SELECT * FROM scores WHERE idplayers = ?', [idplayers]);
+    getCurrentPlayerScore: (idplayers, idgame) => {
+        return executesql('SELECT * FROM scores WHERE idplayers = ? AND idgame = ?', [idplayers, idgame]);
     },
 
     addNewScore: (score, idgame, idplayers) => {
         return executesql('INSERT INTO scores (score, idgame, idplayers) VALUES (?, ?, ?)', [score, idgame, idplayers]);
+    },
+
+    updateScore: (idscores, score) => {
+        return executesql('UPDATE scores SET score = ? WHERE idscores = ?', [score, idscores]);
     },
 
     addNewUser: (username, password, nickname) => {

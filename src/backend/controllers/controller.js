@@ -24,14 +24,25 @@ module.exports = {
         }
     },
 
+    updateScore: async (req, res) => {
+        console.log(req.body)
+        let updatedScore = await sql.updateScore(req.body.idscores, req.body.score);
+        if (updatedScore.affectedRows > 0) {
+            res.status(200).json(updatedScore);
+        }
+        else {
+            res.status(400).json({ error: 'Oops something went wrong' });
+        }
+    },
+
     getCurrentPlayerScore: async (req, res) => {
 
-        let scores = await sql.getCurrentPlayerScore(req.body.idplayers);
+        let scores = await sql.getCurrentPlayerScore(req.query.idplayers, req.query.idgame);
         if (scores.length > 0) {
             res.status(200).json(scores);
         }
         else {
-            res.status(404).json({ error: 'No scores found' });
+            res.status(400).json({ error: 'No scores found' });
         }
     },
 

@@ -17,6 +17,7 @@ function GuessingGame() {
     const [tries, setTryTimes] = useState(0);
     const [winner, setWinner] = useState(false);
     const [scores, setScores] = useState([]);
+    const [playerScores, setPlayerScores] = useState([]);
     const [player, setPlayer] = useState('');
     const [info, setInfo] = useState('');
     const [status, setStatus] = useState('');
@@ -26,6 +27,8 @@ function GuessingGame() {
         RandomizeNumber();
         sessionStorage.getItem("token") ? setPlayer(decodeToken(sessionStorage.getItem("token"))) : window.location.href = "/home";
         GetScores();
+        GetPlayerScores(decodeToken(sessionStorage.getItem("token")));
+        // console.log("playerscores: ", playerScores)
     }, []);
 
     const GetScores = async () => {
@@ -54,6 +57,32 @@ function GuessingGame() {
 
     }
 
+    const UpdateScore = async (score) => {
+        console.log("updating: ", playerScores, " ", score);
+        let response = await fetch("http://localhost:3004/updatescores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ idscores: playerScores[0].idscores, score: score + playerScores[0].score }),
+        });
+        if (response.ok) {
+            GetScores();
+        }
+    }
+
+    const GetPlayerScores = async (player) => {
+        console.log("fetching: ", player);
+        let response = await fetch("http://localhost:3004/playerscores?idplayers=" + player.idplayers + "&idgame=" + gameid);
+        if (response.ok) {
+            let scores = await response.json();
+            setPlayerScores(scores);
+        }
+        else {
+            setPlayerScores([]);
+        }
+    }
+
     const RandomizeNumber = () => {
         let x = Math.floor(Math.random() * 9) + 1;
         setNumber(x);
@@ -64,7 +93,7 @@ function GuessingGame() {
             e.target.src = '/guessing/Winner.png';
             let points = 10
             setWinner(true);
-            AddScore(points);
+            playerScores.length > 0 ? UpdateScore(points) : AddScore(points);
             setStatus('You Win');
 
 
@@ -73,14 +102,14 @@ function GuessingGame() {
             e.target.src = '/guessing/Winner.png';
             let points = 5
             setWinner(true);
-            AddScore(points);
+            playerScores.length > 0 ? UpdateScore(points) : AddScore(points);
             setStatus('You Win');
         }
         else if (e.target.id === number.toString() && tries < 3 && winner === false) {
             e.target.src = '/guessing/Winner.png';
             let points = 2
             setWinner(true);
-            AddScore(points);
+            playerScores.length > 0 ? UpdateScore(points) : AddScore(points);
             setStatus('You Win');
 
         }
@@ -127,7 +156,7 @@ function GuessingGame() {
                 </Navbar.Collapse>
             </Navbar>
 
-            <Container fluid style={{textShadow: "0.5px 0.5px 0.5px black"}}>
+            <Container fluid style={{ textShadow: "0.5px 0.5px 0.5px black" }}>
                 <Row style={{ marginLeft: "16%", fontSize: "20px", fontStyle: "italic" }}>{status}
                 </Row>
                 <Row>
