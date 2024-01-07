@@ -96,9 +96,18 @@ const MainView = () => {
                                     width={171}
                                     height={180}
                                     alt="171x180"
-                                    src="Guess.jpg"
+                                    src="/guessing/Guess.jpg"
                                 />
                                 <Figure.Caption href="/guessinggame" style={{ textAlign: "center" }}>Guessing game</Figure.Caption>
+                            </Figure>
+                            <Figure style={{ margin: "10px" }} onClick={() => window.location.href = "/findapair"}>
+                                <Figure.Image
+                                    width={171}
+                                    height={180}
+                                    alt="171x180"
+                                    src="/findpair/thumbnail.jpg"
+                                />
+                                <Figure.Caption href="/findapair" style={{ textAlign: "center" }}>Find a pair</Figure.Caption>
                             </Figure>
                         </div> : <p style={{ textAlign: "center" }}>Login to play</p>}
                     </Card.Body>

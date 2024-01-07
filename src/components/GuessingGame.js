@@ -20,6 +20,7 @@ function GuessingGame() {
     const [player, setPlayer] = useState('');
     const [info, setInfo] = useState('');
     const [status, setStatus] = useState('');
+    const [gameid, setGameid] = useState(1);
 
     useEffect(() => {
         RandomizeNumber();
@@ -29,13 +30,12 @@ function GuessingGame() {
 
     const GetScores = async () => {
         console.log("fetching");
-        let response = await fetch("http://localhost:3004/scores");
+        let response = await fetch("http://localhost:3004/scores?gameid=" + gameid);
         if (response.ok) {
             let scores = await response.json();
             setScores(scores);
         }
         else {
-            // console.log("no scores");
             setScores([]);
         }
     }
@@ -46,12 +46,12 @@ function GuessingGame() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ score: points, idgame: 1, idplayers: player.idplayers }),
+            body: JSON.stringify({ score: points, idgame: gameid, idplayers: player.idplayers }),
         });
         if (response.ok) {
-            GetScores();  
+            GetScores();
         }
-        
+
     }
 
     const RandomizeNumber = () => {
@@ -59,9 +59,9 @@ function GuessingGame() {
         setNumber(x);
     }
     const Guess = (e) => {
-        
-        if (e.target.id === `win` && tries < 1 && winner === false) {
-            e.target.src = '/Winner.png';
+
+        if (e.target.id === number.toString() && tries < 1 && winner === false) {
+            e.target.src = '/guessing/Winner.png';
             let points = 10
             setWinner(true);
             AddScore(points);
@@ -69,15 +69,15 @@ function GuessingGame() {
 
 
         }
-        else if (e.target.id === `win` && tries < 2 && winner === false) {
-            e.target.src = '/Winner.png';
+        else if (e.target.id === number.toString() && tries < 2 && winner === false) {
+            e.target.src = '/guessing/Winner.png';
             let points = 5
             setWinner(true);
             AddScore(points);
             setStatus('You Win');
         }
-        else if (e.target.id === `win` && tries < 3 && winner === false) {
-            e.target.src = '/Winner.png';
+        else if (e.target.id === number.toString() && tries < 3 && winner === false) {
+            e.target.src = '/guessing/Winner.png';
             let points = 2
             setWinner(true);
             AddScore(points);
@@ -88,7 +88,7 @@ function GuessingGame() {
             setStatus("You already guessed this block");
         }
         else if (tries === 2 && winner === false) {
-            e.target.src = "/Loser.jpg";
+            e.target.src = "/guessing/Loser.jpg";
             setTryTimes(tries + 1);
             setStatus('Game over');
 
@@ -101,29 +101,25 @@ function GuessingGame() {
         }
         else {
             setTryTimes(tries + 1);
-            e.target.src = `/Loser.jpg`;
+            e.target.src = `/guessing/Loser.jpg`;
             e.target.id = "";
         }
 
-    }
-
-    const ReloadPage = () => {
-        window.location.reload();
     }
 
     return (
         <div>
 
             <Navbar bg="light" expand="lg" className="navbar" style={{ justifyContent: "space-between" }}>
+                <Navbar.Brand style={{ marginLeft: "10px" }}>Guessing Game</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Navbar.Brand style={{ marginLeft: "10px" }}>Guessing Game</Navbar.Brand>
                         <NavDropdown title="Rules"><Nav.Item>Find the hidden figure in three tries or less <br></br><br></br>
                             You get 10 points if you guess right away<br></br><br></br>You get 5 points if you guess in 2 tries<br></br><br></br>You get 2 points if you guess in 3 tries<br></br></Nav.Item></NavDropdown>
                         <Nav.Item>{info}</Nav.Item>
                         <Nav.Link href="/home">Home</Nav.Link>
-                        <Nav.Link onClick={() => ReloadPage()}>Reload</Nav.Link>
+                        <Nav.Link onClick={() => window.location.reload()}>Restart</Nav.Link>
                     </Nav>
                     <Nav className="ms-auto" style={{ marginRight: "25px" }} >
                         <Nav.Item style={{ fontStyle: "italic", fontSize: "20px", textAlign: "left" }}>Welcome {player.nickname}</Nav.Item>
@@ -131,14 +127,14 @@ function GuessingGame() {
                 </Navbar.Collapse>
             </Navbar>
 
-            <Container fluid>
-                <Row style={{ marginLeft: "16%", fontSize: "20px", fontStyle: "italic"  }}>{status}
+            <Container fluid style={{textShadow: "0.5px 0.5px 0.5px black"}}>
+                <Row style={{ marginLeft: "16%", fontSize: "20px", fontStyle: "italic" }}>{status}
                 </Row>
                 <Row>
                     <Col className="guessingMain">
 
                         {Array.from({ length: 9 }, (_, i) => (
-                            <img style={{ margin: "15px" }} onClick={(e) => Guess(e)} className={`guessingBlock`} key={i + 1 * 255} id={i + 1 === number ? "win" : "lose"} src="/LandScape.png" alt="Logo" />
+                            <img style={{ margin: "15px" }} onClick={(e) => Guess(e)} className={`guessingBlock`} key={i + 1 * 255} id={i + 1 === number ? number : i + 1} src="/guessing/LandScape.png" alt="Logo" />
                         ))}
                     </Col>
                     <Col>

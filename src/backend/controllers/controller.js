@@ -4,7 +4,8 @@ const sql = require('../db/sql');
 module.exports = {
 
     getScores: async (req, res) => {
-        let scores = await sql.getScores(req, res);
+        let gameid = req.query.gameid
+        let scores = await sql.getScores(gameid);
         if (scores.length > 0) {
             res.status(200).json(scores);
         }

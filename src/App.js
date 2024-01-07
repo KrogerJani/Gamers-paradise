@@ -5,6 +5,7 @@ import Error from "./components/Error";
 import MainView from "./components/FrontPage";
 import GuessingGame from "./components/GuessingGame";
 import Register from "./components/Register";
+import FindAPair from "./components/FindAPair";
 
 
 
@@ -19,6 +20,7 @@ const Index = () => {
                     <Route path={'/home'} element={<MainView />} />
                     <Route path={'/about'} element={<About />} />
                     <Route path={'/guessinggame'} element={<GuessingGame />} />
+                    <Route path="/findapair" element={<FindAPair />} />
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'*'} element={<Error />} />
                 </Routes>

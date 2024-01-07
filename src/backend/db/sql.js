@@ -17,8 +17,12 @@ const executesql = (query, params) => {
 
 module.exports = {
     
-    getScores: () => {
-        return executesql('SELECT s.score, p.nickname, s.idgame FROM scores AS s JOIN players AS p ON s.idplayers = p.idplayers ORDER BY s.score desc');
+    getScores: (gameid) => {
+        let desc = 'DESC';
+        if(gameid == 2){
+            desc = 'ASC';
+        }
+        return executesql('SELECT s.score, p.nickname, s.idgame FROM scores AS s JOIN players AS p ON s.idplayers = p.idplayers Where s.idgame = ? ORDER BY s.score ' + desc + '', [gameid]);
     },
 
     getCurrentPlayerScore: (idplayers) => {
