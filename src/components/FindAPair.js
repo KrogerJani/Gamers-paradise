@@ -135,10 +135,15 @@ export default function FindAPair() {
         }
         if (currentCard === event.target.src) {
             let total = totalGuesses + 1      
+            setTimeout(() => {
+              
             setTotalGuesses(totalGuesses + 1)
             setPairs([...pairs, currentCard])
             setSelectedImages([])
             setGuesses(0)
+            }, 1000)
+          
+            
             if (pairs.length == 5) {
                 setTimeout(() => {
                     console.log("Total: " + total)

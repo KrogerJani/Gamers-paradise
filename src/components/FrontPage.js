@@ -51,6 +51,8 @@ const MainView = () => {
         <div id="frontpage" >
 
 
+
+
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Navbar.Brand style={{ marginLeft: "10px" }} href="/">Gamers paradise</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -113,9 +115,6 @@ const MainView = () => {
                     </Card.Body>
                 </Card>
             </div>
-
-
-
         </div>
 
     )

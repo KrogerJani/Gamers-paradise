@@ -25,6 +25,7 @@ const Register = () => {
             setInfo('Nickname must be at least 3 characters long');
             return;
         }
+    
 
         let response = await fetch('http://localhost:3004/register', {
             method: 'POST',
