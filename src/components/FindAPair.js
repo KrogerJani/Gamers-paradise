@@ -29,7 +29,7 @@ export default function FindAPair() {
         'Planet.png',
         'Planet.png'
     ]);
-    const initialImageSources = images.map(() => "/findpair/Pohja.png");
+    const initialImageSources = images.map(() => "/findpair/Pohja2.png");
     const [imageSources, setImageSources] = useState(initialImageSources);
     const [selectedImages, setSelectedImages] = useState([]);
     const [totalGuesses, setTotalGuesses] = useState(0);
@@ -106,6 +106,19 @@ export default function FindAPair() {
         });
     };
 
+    const allocateClass = (index, image) => {
+        if (pairs.includes(image)) {
+            return 'found'
+        }
+        if(selectedImages.includes(index)) {
+            return 'selected'
+        }
+        if (!selectedImages.includes(index)) {
+            return 'not-selected'
+        }
+        
+    }
+
 
     const BlockClick = (event, index) => {
         // console.log(guesses, clicks)
@@ -118,9 +131,7 @@ export default function FindAPair() {
             setInfo('You won! you can start a new game by clicking "Restart"');
             return
         }
-        // setTimeout(() => {
-           
-        // }, 2500)
+       
         setSelectedImages([...selectedImages, index])
         setInfo('')
         setGuesses(guesses + 1)
@@ -135,11 +146,10 @@ export default function FindAPair() {
         }
         if (currentCard === event.target.src) {
             let total = totalGuesses + 1      
+            
             setTimeout(() => {
-              
             setTotalGuesses(totalGuesses + 1)
-            setPairs([...pairs, currentCard])
-            setSelectedImages([])
+            setPairs([...pairs, currentCard.toString().substring(31)])
             setGuesses(0)
             }, 1000)
           
@@ -161,7 +171,7 @@ export default function FindAPair() {
             let ids = [previousId, index]
             setTimeout(() => {
 
-                changeImageSource(ids, "/findpair/Pohja.png");
+                changeImageSource(ids, "/findpair/Pohja2.png");
                 setGuesses(0)
                 setCurrentCard("")
                 setPreviousId("")
@@ -193,8 +203,11 @@ export default function FindAPair() {
                 <Row className="d-flex justify-content-space-between">
                     <Col id="findapair">
                         {images?.map((image, index) => (
+                            console.log("pairs", pairs[index]?.includes(image)),
+                            console.log("selected", selectedImages.includes(index)),
+                            // console.log("selected image", pairs.includes(image)),
                             <Image
-                                className={selectedImages.includes(index) ? "selected" : "not-selected"} src={imageSources[index]} alt="FindAPair" rounded id={index} key={index} onClick={(e) => BlockClick(e, index)} />
+                                className={allocateClass(index, image)} src={imageSources[index]} alt="FindAPair" rounded id={index} key={index} onClick={(e) => BlockClick(e, index)} />
                         ))}
                     </Col>
                     <Col>

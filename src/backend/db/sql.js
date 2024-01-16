@@ -29,6 +29,10 @@ module.exports = {
         return executesql('SELECT * FROM scores WHERE idplayers = ? AND idgame = ?', [idplayers, idgame]);
     },
 
+    getCurrentPlayerScores: (id) => {
+        return executesql('SELECT * FROM scores WHERE idplayers = ?', [id]);
+    },
+
     addNewScore: (score, idgame, idplayers) => {
         return executesql('INSERT INTO scores (score, idgame, idplayers) VALUES (?, ?, ?)', [score, idgame, idplayers]);
     },

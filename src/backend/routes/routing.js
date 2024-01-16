@@ -9,6 +9,8 @@ router.post('/addscores', ctrl.addNewScore);
 
 router.get('/playerscores', ctrl.getCurrentPlayerScore);
 
+router.get('/playerscores/:id', ctrl.getCurrentPlayerScores);
+
 router.post('/updatescores', ctrl.updateScore);
 
 router.post('/register', ctrl.addNewUser);

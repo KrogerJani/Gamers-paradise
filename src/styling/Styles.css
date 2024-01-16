@@ -93,14 +93,34 @@
 
 }
 
+.infobox {
+    /* border: 1px solid black; */
+    font-size: small;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 10vh;
+    width: 30vh;
+    text-align: center;
+    color: red;
+}
+
 .selected {
-    transition: transform 0.5s; /* Add the desired transition property and duration */
+    transition: transform 0.5s;
+    /* Add the desired transition property and duration */
     transform-style: preserve-3d;
-    transform: rotateY(180deg); /* Rotate the image 180 degrees on the Y-axis */
-  }
-  
-  .not-selected {
-    transition: transform 0.5s; /* Add the desired transition property and duration */
+    transform: rotateY(180deg);
+    /* Rotate the image 180 degrees on the Y-axis */
+}
+
+.not-selected {
+    transition: transform 0.5s;
+    /* Add the desired transition property and duration */
     transform-style: preserve-3d;
-    transform: rotateY(0deg); /* Reset the rotation to 0 degrees */
-  }
+    transform: rotateY(0deg);
+    /* Reset the rotation to 0 degrees */
+}
+
+.found {
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}

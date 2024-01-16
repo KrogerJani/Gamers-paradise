@@ -46,6 +46,16 @@ module.exports = {
         }
     },
 
+    getCurrentPlayerScores: async (req, res) => {
+        let scores = await sql.getCurrentPlayerScores(req.params.id);
+        if (scores.length > 0) {
+            res.status(200).json(scores);
+        }
+        else {
+            res.status(400).json({ error: 'No scores found' });
+        }    
+    },
+
     addNewUser: async (req, res) => {
 
         let user = await sql.checkExistingUsers(req.body.username, req.body.password);
