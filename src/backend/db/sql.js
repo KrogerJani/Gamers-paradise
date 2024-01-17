@@ -16,10 +16,10 @@ const executesql = (query, params) => {
 };
 
 module.exports = {
-    
+
     getScores: (gameid) => {
         let desc = 'DESC';
-        if(gameid == 2){
+        if (gameid == 2) {
             desc = 'ASC';
         }
         return executesql('SELECT s.score, p.nickname, s.idgame FROM scores AS s JOIN players AS p ON s.idplayers = p.idplayers Where s.idgame = ? ORDER BY s.score ' + desc + '', [gameid]);
@@ -45,8 +45,8 @@ module.exports = {
         return executesql('INSERT INTO players (username, password, nickname) VALUES (?, ?, ?)', [username, password, nickname]);
     },
 
-    checkExistingUsers: (username, password) => {
-        return executesql('SELECT * FROM players WHERE username = ? AND password = ?', [username, password]);
+    checkExistingUsers: (username) => {
+        return executesql('SELECT * FROM players WHERE username = ?', [username]);
     }
 
 

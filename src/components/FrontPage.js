@@ -64,12 +64,14 @@ const MainView = () => {
                                 <FormControl
                                     type="text"
                                     placeholder="Username"
+                                    autoComplete='off'
                                     style={{ marginBottom: "2px" }}
                                     onChange={(e) => setUsername(e.target.value)}
                                 />
                                 <FormControl
                                     type="password"
                                     placeholder="Password"
+                                    autoComplete='off'
                                     style={{ marginBottom: "2px" }}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />

@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 const sql = require('../db/sql');
+const bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -53,19 +54,20 @@ module.exports = {
         }
         else {
             res.status(400).json({ error: 'No scores found' });
-        }    
+        }
     },
 
     addNewUser: async (req, res) => {
 
-        let user = await sql.checkExistingUsers(req.body.username, req.body.password);
-       
+        let user = await sql.checkExistingUsers(req.body.username);
+
         if (user.length > 0) {
-           return res.status(400).json({ error: 'User already exists' });
+            return res.status(400).json({ error: 'User already exists' });
         }
         else {
-            let newUser = await sql.addNewUser(req.body.username, req.body.password, req.body.nickname);
-           
+            const hashedPwd = await bcrypt.hash(req.body.password, 10);
+            let newUser = await sql.addNewUser(req.body.username, hashedPwd, req.body.nickname);
+
             if (newUser.insertId > 0) {
                 res.status(200).json(newUser);
             }
@@ -77,16 +79,20 @@ module.exports = {
 
     loginUser: async (req, res) => {
 
-        let user = await sql.checkExistingUsers(req.body.username, req.body.password);
-    
+        let user = await sql.checkExistingUsers(req.body.username);
+
         if (user.length > 0) {
-            let token = jwt.sign({ nickname: user[0].nickname, idplayers: user[0].idplayers }, 'catn1p0t');
-            res.status(200).json({ token: token });
+            console.log(user)
+            const match = await bcrypt.compare(req.body.password, user[0].password);
+            if (match) {
+                let token = jwt.sign({ nickname: user[0].nickname, idplayers: user[0].idplayers }, 'catn1p0t');
+                res.status(200).json({ token: token });
+            }
         }
-        else{
+        else {
             res.status(400).json({ error: 'User not found' });
         }
     }
 
-    
+
 }

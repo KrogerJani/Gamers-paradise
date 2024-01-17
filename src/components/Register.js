@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -88,17 +87,16 @@ const Register = () => {
                 </Form.Group>
                 <Form.Group style={{ margin: '10px'}}>
                     <label htmlFor="username" style={{ margin: '5px' }}>Username</label>
-                    <Form.Control style={{ margin: '5px' }} id='username' type="text" name="username" onChange={(e) => setUsername(e.target.value)} placeholder="Username" minLength={6} required />
+                    <Form.Control style={{ margin: '5px' }} id='username' type="text" name="username" onChange={(e) => setUsername(e.target.value)} placeholder="Username" minLength={6} autoComplete='off' required />
                     {!username.length == 0 && !validusername ? <div className='infobox'>{usernameErrorMessage}</div> : <div></div>}
                     <label htmlFor="password" style={{ margin: '5px' }}>Password</label>
-                    <Form.Control style={{ margin: '5px' }} type="password" name="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" minLength={6} required />
+                    <Form.Control style={{ margin: '5px' }} type="password" name="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" minLength={6} autoComplete='off' required />
                     {!password.length == 0 && !validpassword ? <div className='infobox'>{passwordErrorMessage}</div> : <div></div>}
                     <label htmlFor="nickname" style={{ margin: '5px' }}>Nickname</label>
-                    <Form.Control style={{ margin: '5px' }} type="text" name="nickname" onChange={(e) => setNickname(e.target.value)} placeholder="Nickname" minLength={3} required />
+                    <Form.Control style={{ margin: '5px' }} type="text" name="nickname" onChange={(e) => setNickname(e.target.value)} placeholder="Nickname" minLength={3} autoComplete='off' required />
                     {!nickname.length == 0 && !validnickname ? <div className='infobox'>{nicknameErrorMessage}</div> : <div></div>}
                     <Button onClick={(e) => Register(e)} style={{ margin: '5px'}} disabled={!(validusername && validpassword && validnickname)} >Register</Button>
-                    {/* <input type="submit" formAction='http://localhost:3004/register' method="POST" value="Register"  /> */}
-                    <a href="http://localhost:3000/" style={{ margin: '10px', fontStyle: "italic" }}>Home</a>
+                    <a href="/" style={{ margin: '10px', fontStyle: "italic" }}>Home</a>
                 </Form.Group>
             </Form>
         </div>
