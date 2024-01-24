@@ -120,7 +120,6 @@ export default function FindAPair() {
 
 
     const BlockClick = (event, index) => {
-        // console.log(guesses, clicks)
         if (guesses > 1 || selectedImages.includes(index)) {
             console.log("Already selected", selectedImages)
             setInfo('Already selected');

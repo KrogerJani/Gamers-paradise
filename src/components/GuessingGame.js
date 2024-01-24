@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 
+
 function GuessingGame() {
     const [number, setNumber] = useState(0);
     const [tries, setTryTimes] = useState(0);
@@ -156,14 +157,14 @@ function GuessingGame() {
                 </Navbar.Collapse>
             </Navbar>
 
-            <Container fluid style={{ textShadow: "0.5px 0.5px 0.5px black" }}>
+            <Container className="background" fluid style={{ textShadow: "0.5px 0.5px 0.5px black" }}>
                 <Row style={{ marginLeft: "16%", fontSize: "20px", fontStyle: "italic" }}>{status}
                 </Row>
                 <Row>
                     <Col className="guessingMain">
 
                         {Array.from({ length: 9 }, (_, i) => (
-                            <img style={{ margin: "15px" }} onClick={(e) => Guess(e)} className={`guessingBlock`} key={i + 1 * 255} id={i + 1 === number ? number : i + 1} src="/guessing/LandScape.png" alt="Logo" />
+                            <Image roundedCircle style={{ margin: "15px" }} onClick={(e) => Guess(e)} className={`guessingBlock`} key={i + 1 * 255} id={i + 1 === number ? number : i + 1} src="/guessing/LandScape.png" alt="Logo" />
                         ))}
                     </Col>
                     <Col>

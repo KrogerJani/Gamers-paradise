@@ -42,11 +42,9 @@ const Register = () => {
             return;
         }
 
-        // let pbkdf2 = require('pbkdf2');
-        // var derivedkey = pbkdf2.pbkdf2Sync(password, 'salt', 1000, 64, 'sha512');
-    
 
-        let response = await fetch('http://localhost:3004/register', {
+        try {
+            let response = await fetch('http://localhost:3004/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -71,9 +69,9 @@ const Register = () => {
             let data = await response.json();
             console.log("data: ", data)
             setInfo(data.error)
-            // setNickname('');
-            // setPassword('');
-            // setUsername('');
+        }
+        } catch (error) {
+            console.log(error);
         }
     }
 

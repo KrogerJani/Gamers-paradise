@@ -23,6 +23,8 @@ const MainView = () => {
     }
 
     const Login = async () => {
+
+       try {
         let response = await fetch('http://localhost:3004/login', {
             method: 'POST',
             headers: {
@@ -45,6 +47,9 @@ const MainView = () => {
             let data = await response.json();
             setInfo(data.error);
         }
+       } catch (error) {
+        console.log(error);
+       }
     }
 
     return (
