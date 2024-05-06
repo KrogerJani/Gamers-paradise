@@ -123,31 +123,55 @@
     width: 128px;
     border-radius: 50%;
     background-color: gold;
+    border: 2px solid gray;
     display: inline-block;
     margin: 10px;
     text-align: center;
     font-size: 30px;
-    padding-top: 30px;
+    font-family: fantasy;
+    font-weight: 700;
+    padding-top: 40px;
 }
 
 .notselected-lottery{
     height: 64px;
     width: 64px;
-    background-color: rgba(15, 221, 94, 0.18);
+    background-color: rgba(255,215,0, 0.2);
     display: inline-block;
     margin: 10px;
     text-align: center;
     font-size: 30px;
+    font-family: fantasy;
     padding-top: 10px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .selected-lottery{
     height: 64px;
     width: 64px;
-    background-color: rgba(223, 219, 15, 0.74);
+    background-color: gold;
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    font-family: fantasy;
+    font-size: 30px;
+    padding-top: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.extranumber-lottery{
+    height: 64px;
+    width: 64px;
+    background-color: rgba(15, 223, 77, 0.788);
     display: inline-block;
     margin: 10px;
     text-align: center;
     font-size: 30px;
+    font-family: fantasy;
     padding-top: 10px;
+    border-radius: 50%;
+    cursor: pointer;
 }
+

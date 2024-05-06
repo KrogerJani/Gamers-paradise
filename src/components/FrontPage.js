@@ -118,6 +118,15 @@ const MainView = () => {
                                 />
                                 <Figure.Caption href="/findapair" style={{ textAlign: "center" }}>Find a pair</Figure.Caption>
                             </Figure>
+                            <Figure style={{ margin: "10px" }} onClick={() => window.location.href = "/lottery"}>
+                                <Figure.Image
+                                    width={171}
+                                    height={180}
+                                    alt="171x180"
+                                    src="/lottery/Thumbnail.png"
+                                />
+                                <Figure.Caption href="/lottery" style={{ textAlign: "center" }}>Lottery</Figure.Caption>
+                            </Figure>
                         </div> : <p style={{ textAlign: "center" }}>Login to play</p>}
                     </Card.Body>
                 </Card>

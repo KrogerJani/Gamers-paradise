@@ -109,17 +109,21 @@ export default function FindAPair() {
         if (pairs.includes(image)) {
             return 'found'
         }
-        if(selectedImages.includes(index)) {
+        if (selectedImages.includes(index)) {
             return 'selected'
         }
         if (!selectedImages.includes(index)) {
             return 'not-selected'
         }
-        
+
     }
 
 
     const BlockClick = (event, index) => {
+        if(pairs.length == 6){
+            setInfo('You won! you can start a new game by clicking "Restart"');
+            return
+        }
         if (guesses > 1 || selectedImages.includes(index)) {
             console.log("Already selected", selectedImages)
             setInfo('Already selected');
@@ -129,11 +133,11 @@ export default function FindAPair() {
             setInfo('You won! you can start a new game by clicking "Restart"');
             return
         }
-       
+
         setSelectedImages([...selectedImages, index])
         setInfo('')
         setGuesses(guesses + 1)
-        
+
         changeImageSource(index, '/findpair/' + images[index])
         event.target.src = "/findpair/" + images[event.target.id]
 
@@ -143,15 +147,15 @@ export default function FindAPair() {
             return
         }
         if (currentCard === event.target.src) {
-            let total = totalGuesses + 1      
-            
+            let total = totalGuesses + 1
+
             setTimeout(() => {
-            setTotalGuesses(totalGuesses + 1)
-            setPairs([...pairs, currentCard.toString().substring(31)])
-            setGuesses(0)
+                setTotalGuesses(totalGuesses + 1)
+                setPairs([...pairs, currentCard.toString().substring(31)])
+                setGuesses(0)
             }, 1000)
-          
-            
+
+
             if (pairs.length == 5) {
                 setTimeout(() => {
                     console.log("Total: " + total)
@@ -175,7 +179,7 @@ export default function FindAPair() {
                 setPreviousId("")
                 setSelectedImages([])
             }, 2000)
-          
+
 
         }
 
@@ -184,11 +188,13 @@ export default function FindAPair() {
     return (
         <div>
             <Navbar className="bg-body-tertiary" expand="lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
-                <Navbar.Brand style={{marginLeft: "10px"}}>Find a pair</Navbar.Brand>
+                <Navbar.Brand style={{ marginLeft: "10px" }}>Find a pair</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <Nav.Link href="/home">Home</Nav.Link>
+                        <NavDropdown title="Rules"><Nav.Item>Goal is to find pairs, fewer the tries, better the score <br></br><br></br>
+                        </Nav.Item></NavDropdown>
                         <Nav.Link onClick={() => window.location.reload()}>Restart</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

@@ -10,12 +10,14 @@ const NICKNAME_REGEX = /^[a-zA-Z0-9]{3,18}$/;
 const usernameErrorMessage = "Username must be between 6 and 18 characters long and may contain letters, numbers, dots, and underscores.";
 const passwordErrorMessage = "Password must be between 6 and 24 characters long and must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
 const nicknameErrorMessage = "Nickname must be between 3 and 18 characters long and may contain letters and numbers.";
+const passwordConfirmErrorMessage = "Passwords do not match.";
 
 const Register = () => {
 
     const [username, setUsername] = useState('');
     const [validusername, setValidUsername] = useState(false);
     const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [validpassword, setValidPassword] = useState(false);
     const [nickname, setNickname] = useState('');
     const [validnickname, setValidNickname] = useState(false);
@@ -38,10 +40,9 @@ const Register = () => {
     const Register = async (e) => {
         e.preventDefault();
 
-        if(!validusername || !validpassword || !validnickname) {
+        if(!validusername || !validpassword || !validnickname || passwordConfirm != password) {
             return;
         }
-
 
         try {
             let response = await fetch('http://localhost:3004/register', {
@@ -62,6 +63,7 @@ const Register = () => {
             setNickname('');
             setPassword('');
             setUsername('');
+            setPasswordConfirm('');
             window.location.href = "http://localhost:3000/home";
         }
 
@@ -88,8 +90,11 @@ const Register = () => {
                     <Form.Control style={{ margin: '5px' }} id='username' type="text" name="username" onChange={(e) => setUsername(e.target.value)} placeholder="Username" minLength={6} autoComplete='off' required />
                     {!username.length == 0 && !validusername ? <div className='infobox'>{usernameErrorMessage}</div> : <div></div>}
                     <label htmlFor="password" style={{ margin: '5px' }}>Password</label>
-                    <Form.Control style={{ margin: '5px' }} type="password" name="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" minLength={6} autoComplete='off' required />
+                    <Form.Control style={{ margin: '5px' }} id='password' type="password" name="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" minLength={6} autoComplete='off' required />
                     {!password.length == 0 && !validpassword ? <div className='infobox'>{passwordErrorMessage}</div> : <div></div>}
+                    <label htmlFor="passwordConfirm" style={{ margin: '5px' }}>Confirm Password</label>
+                    <Form.Control style={{ margin: '5px' }} id='passwordConfirm' type="password" name="passwordConfirm" onChange={(e) => setPasswordConfirm(e.target.value)} placeholder="Confirm Password" minLength={6} autoComplete='off' required />
+                    {!passwordConfirm.length == 0 && passwordConfirm != password ? <div className='infobox'>{passwordConfirmErrorMessage}</div> : <div></div>}
                     <label htmlFor="nickname" style={{ margin: '5px' }}>Nickname</label>
                     <Form.Control style={{ margin: '5px' }} type="text" name="nickname" onChange={(e) => setNickname(e.target.value)} placeholder="Nickname" minLength={3} autoComplete='off' required />
                     {!nickname.length == 0 && !validnickname ? <div className='infobox'>{nicknameErrorMessage}</div> : <div></div>}
